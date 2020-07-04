@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
+import Icon from '../components/Icon';
 
 const data = [
     {
@@ -12,7 +13,7 @@ const data = [
     }
 ]
 
-for(let i = 0; i < 100; i++) {
+for (let i = 0; i < 100; i++) {
     data.push(data[0]);
 }
 
@@ -22,7 +23,14 @@ const ContactList = ({
     return (
         <div className="column list" style={style}>
             <div className="header">
-                Hi
+                <div className="list-title">
+                    <div>Test Name</div>
+                    <Icon icon="add" size={25} />
+                </div>
+                <input
+                    type="search"
+                    placeholder="Search"
+                />
             </div>
             {data.map(item => <ContactItem key={item.number} data={item} />)}
         </div>
