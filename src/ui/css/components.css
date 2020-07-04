@@ -1,6 +1,6 @@
 .clickable {
     cursor: pointer;
-    transition: 0.2s;
+    transition: var(--animation-scale);
 }
 
 .clickable:hover {
@@ -19,7 +19,7 @@
     align-items: center;
     font-size: 18px;
     align-self: center;
-    transition: 0.2s;
+    transition: var(--animation-scale);
     cursor: pointer;
 }
 

@@ -7,7 +7,7 @@ const FilledButton = ({
 }) => {
     const childStyle = { 
         marginLeft: loading ? 10 : 0,
-        transition: '0.2s'
+        transition: 'var(--animation-scale)'
     }
     return (
         <div

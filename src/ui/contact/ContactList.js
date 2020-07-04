@@ -23,7 +23,7 @@ const ContactList = ({
                 style={{
                     left: formVisible ? 0 : '-100%',
                     visibility: formVisible ? 'visible' : 'hidden',
-                    transition: '0.2s',
+                    transition: 'var(--animation-scale)',
                 }}
                 onClose={() => setFormVisible(false)}
             />
