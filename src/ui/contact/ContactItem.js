@@ -1,12 +1,16 @@
 import React from 'react';
+import { randomColor, getInitials } from '../../Helper';
 
 const ContactItem = ({
     data
 }) => {
+    const initialsStyle = {
+        background: randomColor()
+    }
     return (
         <div className="list-item row">
-            <div className="initials">
-                {data.name.split(' ').map(n => n[0].toUpperCase()).join('')}
+            <div className="initials" style={initialsStyle}>
+                {getInitials(data.name)}
             </div>
             <div className="column">
                 <div className="list-item-title">{data.name}</div>

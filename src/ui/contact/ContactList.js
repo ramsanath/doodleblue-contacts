@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
+import ContactForm from './ContactForm';
 import Icon from '../components/Icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { FETCH_CONTACTS } from '../../redux/actions/ContactsAction';
@@ -10,17 +11,26 @@ const ContactList = ({
 }) => {
     const dispatch = useDispatch();
     const { contacts, loading, error } = useSelector(store => store.contacts);
+    const [formVisible, setFormVisible] = useState(false);
 
     useEffect(() => {
         dispatch(FETCH_CONTACTS.trigger());
     }, []);
 
+    const listStyle = {
+        ...style,
+        overflowY: formVisible ? 'hidden' : 'auto'
+    };
+
     return (
-        <div className="column list" style={style}>
+        <div className="column list" style={listStyle}>
             <div className="header">
                 <div className="list-title">
-                    <div>Test Name</div>
-                    <Icon icon="add" size={25} />
+                    Test Name
+                    <Icon
+                        icon="add"
+                        onClick={() => setFormVisible(true)}
+                    />
                 </div>
                 <input
                     type="search"
@@ -33,6 +43,9 @@ const ContactList = ({
                     data={item}
                 />
             )}
+            {formVisible ? <ContactForm
+                onCancel={() => setFormVisible(false)}
+            /> : null}
         </div>
     );
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import IconData from './IconData';
 
-const Icon = ({ icon, size, ...rest }) => {
+const Icon = ({
+    icon,
+    size = 25,
+    ...rest
+}) => {
     return (
         <img
             className="clickable"
