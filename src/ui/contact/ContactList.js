@@ -17,35 +17,38 @@ const ContactList = ({
         dispatch(FETCH_CONTACTS.trigger());
     }, []);
 
-    const listStyle = {
-        ...style,
-        overflowY: formVisible ? 'hidden' : 'auto'
-    };
-
     return (
-        <div className="column list" style={listStyle}>
-            <div className="header">
-                <div className="list-title">
-                    Test Name
+        <div className="list-container" style={style}>
+            <ContactForm
+                style={{
+                    left: formVisible ? 0 : '-100%',
+                    visibility: formVisible ? 'visible' : 'hidden',
+                    transition: '0.2s',
+                }}
+                onClose={() => setFormVisible(false)}
+            />
+            <div className="list">
+                <div className="header">
+                    <div className="list-title">
+                        Test Name
                     <Icon
-                        icon="add"
-                        onClick={() => setFormVisible(true)}
+                            icon="add"
+                            onClick={() => setFormVisible(true)}
+                        />
+                    </div>
+                    <input
+                        type="search"
+                        placeholder="Search"
                     />
                 </div>
-                <input
-                    type="search"
-                    placeholder="Search"
-                />
+                {contacts.map(item =>
+                    <ContactItem
+                        key={item.number}
+                        data={item}
+                    />
+                )}
+
             </div>
-            {contacts.map(item =>
-                <ContactItem
-                    key={item.number}
-                    data={item}
-                />
-            )}
-            {formVisible ? <ContactForm
-                onClose={() => setFormVisible(false)}
-            /> : null}
         </div>
     );
 }

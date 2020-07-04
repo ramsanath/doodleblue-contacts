@@ -10,7 +10,8 @@ import { validateForm } from './ContactFormHelper';
 import FilledButton from '../components/FilledButton';
 
 const ContactForm = ({
-    onClose
+    onClose,
+    style
 }) => {
     const dispatch = useDispatch();
     const {
@@ -50,7 +51,7 @@ const ContactForm = ({
     };
 
     return (
-        <div id="contact-form">
+        <div id="contact-form" style={style}>
             <div id="contact-form-header">
                 <Icon
                     icon="back"
