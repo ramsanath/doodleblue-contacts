@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
-import ContactForm from './ContactForm';
+import ContactForm from '../contactForm/ContactForm';
 import Icon from '../components/Icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { FETCH_CONTACTS } from '../../redux/actions/ContactsAction';
@@ -44,7 +44,7 @@ const ContactList = ({
                 />
             )}
             {formVisible ? <ContactForm
-                onCancel={() => setFormVisible(false)}
+                onClose={() => setFormVisible(false)}
             /> : null}
         </div>
     );

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { randomColor, getInitials } from '../../Helper';
 
 const ContactItem = ({
     data
 }) => {
+    const backgroundColor = useRef(randomColor());
+
     const initialsStyle = {
-        background: randomColor()
+        background: backgroundColor.current
     }
+
     return (
         <div className="list-item row">
             <div className="initials" style={initialsStyle}>
