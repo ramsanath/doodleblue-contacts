@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
 import ContactForm from '../contactForm/ContactForm';
@@ -12,10 +12,26 @@ const ContactList = ({
     const dispatch = useDispatch();
     const { contacts, loading, error } = useSelector(store => store.contacts);
     const [formVisible, setFormVisible] = useState(false);
+    const [initialFormData, setInitialFormData] = useState(null);
 
     useEffect(() => {
         dispatch(FETCH_CONTACTS.trigger());
     }, []);
+
+    const handleEditItem = useCallback((data, index) => {
+        setInitialFormData(data);
+        setFormVisible(true);
+    });
+
+    const handleNewItem = useCallback(() => {
+        setInitialFormData(null);
+        setFormVisible(true);
+    });
+
+    const handleCloseForm = useCallback(() => {
+        setInitialFormData(null);
+        setFormVisible(false);
+    });
 
     return (
         <div className="list-container" style={style}>
@@ -25,15 +41,16 @@ const ContactList = ({
                     visibility: formVisible ? 'visible' : 'hidden',
                     transition: 'var(--animation-scale)',
                 }}
-                onClose={() => setFormVisible(false)}
+                initialData={initialFormData}
+                onClose={handleCloseForm}
             />
             <div className="list">
                 <div className="header">
                     <div className="list-title">
-                        Test Name
-                    <Icon
+                        {"Test Name"}
+                        <Icon
                             icon="add"
-                            onClick={() => setFormVisible(true)}
+                            onClick={handleNewItem}
                         />
                     </div>
                     <input
@@ -41,10 +58,12 @@ const ContactList = ({
                         placeholder="Search"
                     />
                 </div>
-                {contacts.map(item =>
+                {contacts.map((item, index) =>
                     <ContactItem
                         key={item.number}
                         data={item}
+                        index={index}
+                        onEdit={handleEditItem}
                     />
                 )}
 

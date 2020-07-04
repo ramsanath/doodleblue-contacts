@@ -1,7 +1,8 @@
 import {
     SUBMIT_CONTACT_FORM,
     ON_CHANGE_INPUT,
-    RESET_CONTACT_FORM_STATE
+    RESET_CONTACT_FORM_STATE,
+    SET_INITIAL_CONTACT_FORM_DATA
 } from "../actions/ContactFormActions";
 
 const initialState = {
@@ -46,6 +47,14 @@ export default (state = initialState, action) => {
         case RESET_CONTACT_FORM_STATE.TRIGGER:
             return {
                 ...initialState
+            }
+        case SET_INITIAL_CONTACT_FORM_DATA.TRIGGER:
+            return {
+                ...state,
+                formData: {
+                    ...state.formData,
+                    ...action.payload
+                }
             }
         default:
             return state;

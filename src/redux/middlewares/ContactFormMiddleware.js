@@ -8,7 +8,7 @@ const ContactFormMiddleware = store => next => async action => {
         const { update, formData } = action.payload;
         let api = contactsRepo.addNewContact;
         if (update) {
-            // api = contactsRepo.updateContact
+            api = contactsRepo.updateContact
         }
         api(formData)
             .then(() => store.dispatch(FETCH_CONTACTS.trigger()))

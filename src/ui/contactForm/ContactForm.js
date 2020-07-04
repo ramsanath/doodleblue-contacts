@@ -1,17 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../components/Icon';
 import {
     ON_CHANGE_INPUT,
     SUBMIT_CONTACT_FORM,
-    RESET_CONTACT_FORM_STATE
+    RESET_CONTACT_FORM_STATE,
+    SET_INITIAL_CONTACT_FORM_DATA
 } from '../../redux/actions/ContactFormActions';
 import { validateForm } from './ContactFormHelper';
 import FilledButton from '../components/FilledButton';
 
 const ContactForm = ({
     onClose,
-    style
+    style,
+    initialData
 }) => {
     const dispatch = useDispatch();
     const {
@@ -20,13 +22,18 @@ const ContactForm = ({
         submitted,
         submitError
     } = useSelector(store => store.contactForm);
-
+    const updateMode = !!initialData;
     const { name, number, email } = formData;
 
-    const handleOnChange = useRef(e => {
+    const handleOnChange = useCallback(e => {
         const key = e.target.name;
         const value = e.target.value;
         dispatch(ON_CHANGE_INPUT.trigger({ key, value }));
+    });
+
+    const handleOnClose = useCallback(() => {
+        onClose && onClose();
+        dispatch(RESET_CONTACT_FORM_STATE.trigger());
     });
 
     useEffect(() => {
@@ -35,20 +42,20 @@ const ContactForm = ({
         }
     }, [submitted]);
 
-    let handleOnClose = () => {
-        onClose && onClose();
-        dispatch(RESET_CONTACT_FORM_STATE.trigger());
-    }
+    useEffect(() => {
+        if (updateMode) {
+            dispatch(SET_INITIAL_CONTACT_FORM_DATA.trigger(initialData));
+        }
+    }, [updateMode]);
 
-
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         const errors = validateForm(formData);
         if (errors) {
             dispatch(SUBMIT_CONTACT_FORM.failure(errors));
         } else {
-            dispatch(SUBMIT_CONTACT_FORM.trigger({ formData, update: false }));
+            dispatch(SUBMIT_CONTACT_FORM.trigger({ formData, update: updateMode }));
         }
-    };
+    });
 
     return (
         <div id="contact-form" style={style}>
@@ -58,7 +65,7 @@ const ContactForm = ({
                     onClick={handleOnClose}
                     style={{ marginRight: 10 }}
                 />
-                Add New Contact
+                {updateMode ? 'Edit Contact' : 'Add New Contact'}
             </div>
             <div id="contact-form-content">
                 <div className="error-message">
@@ -67,19 +74,19 @@ const ContactForm = ({
                 <input
                     name="name"
                     value={name}
-                    onChange={handleOnChange.current}
+                    onChange={handleOnChange}
                     placeholder="Name"
                 />
                 <input
                     name="number"
                     value={number}
-                    onChange={handleOnChange.current}
+                    onChange={handleOnChange}
                     placeholder="Phone Number"
                 />
                 <input
                     name="email"
                     value={email}
-                    onChange={handleOnChange.current}
+                    onChange={handleOnChange}
                     placeholder="Email Address"
                 />
                 <FilledButton

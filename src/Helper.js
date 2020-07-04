@@ -5,6 +5,7 @@ export const generateFakeContacts = count => {
     let data = [];
     for (let i = 0; i < count; i++) {
         data.push({
+            id: i,
             name: faker.name.firstName() + ' ' + faker.name.lastName(),
             number: faker.phone.phoneNumber(),
             email: faker.internet.email()

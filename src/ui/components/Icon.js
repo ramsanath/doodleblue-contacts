@@ -4,13 +4,14 @@ import IconData from './IconData';
 const Icon = ({
     icon,
     size = 25,
+    style,
     ...rest
 }) => {
     return (
         <img
             className="clickable"
             alt={icon}
-            style={{ width: size, height: size }}
+            style={{ ...style, width: size, height: size }}
             src={IconData[icon]}
             {...rest}
         />

@@ -13,7 +13,18 @@ export const addNewContact = async contact => {
     if (existing) {
         throw new Error('Contact already exists');
     }
+    contact.id = db.contacts.length;
     db.contacts.unshift(contact);
+}
+
+export const updateContact = async contact => {
+    await delay(mockDelay);
+    let index = db.contacts.findIndex(c => c.id === contact.id);
+    db.contacts[index] = {
+        ...db.contacts[index],
+        ...contact
+    };
+    return db.contacts[index];
 }
 
 export const deleteContact = async contact => {
