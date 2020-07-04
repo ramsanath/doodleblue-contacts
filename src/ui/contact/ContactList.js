@@ -1,25 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
 import Icon from '../components/Icon';
-
-const data = [
-    {
-        name: 'Test Name',
-        number: '999999999'
-    }, {
-        name: 'Test Name 2',
-        number: '999999998'
-    }
-]
-
-for (let i = 0; i < 100; i++) {
-    data.push(data[0]);
-}
+import { useSelector, useDispatch } from 'react-redux';
+import { FETCH_CONTACTS } from '../../redux/actions/ContactsAction';
 
 const ContactList = ({
     style
 }) => {
+    const dispatch = useDispatch();
+    const { contacts, loading, error } = useSelector(store => store.contacts);
+
+    useEffect(() => {
+        dispatch(FETCH_CONTACTS.trigger());
+    }, []);
+
     return (
         <div className="column list" style={style}>
             <div className="header">
@@ -32,7 +27,12 @@ const ContactList = ({
                     placeholder="Search"
                 />
             </div>
-            {data.map(item => <ContactItem key={item.number} data={item} />)}
+            {contacts.map(item =>
+                <ContactItem
+                    key={item.number}
+                    data={item}
+                />
+            )}
         </div>
     );
 }
