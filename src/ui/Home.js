@@ -4,7 +4,7 @@ import './css/components.css';
 import './css/theme.css';
 import ContactList from './contact/ContactList';
 
-const App = () => {
+const Home = () => {
   return (
     <div className="column app">
       <ContactList style={styles.list} />
@@ -21,4 +21,4 @@ const styles = {
   }
 }
 
-export default App;
+export default Home;
