@@ -18,6 +18,10 @@ const ContactList = ({
         dispatch(FETCH_CONTACTS.trigger());
     }, []);
 
+    const handleOnClickItem = useCallback((data, index) => {
+        
+    });
+
     const handleEditItem = useCallback((data, index) => {
         setInitialFormData(data);
         setFormVisible(true);
@@ -33,14 +37,16 @@ const ContactList = ({
         setFormVisible(false);
     });
 
+    const formStyle = {
+        left: formVisible ? 0 : '-100%',
+        visibility: formVisible ? 'visible' : 'hidden',
+        transition: 'var(--animation-scale)',
+    };
+
     return (
         <div className="list-container" style={style}>
             <ContactForm
-                style={{
-                    left: formVisible ? 0 : '-100%',
-                    visibility: formVisible ? 'visible' : 'hidden',
-                    transition: 'var(--animation-scale)',
-                }}
+                style={formStyle}
                 initialData={initialFormData}
                 onClose={handleCloseForm}
             />
@@ -63,6 +69,7 @@ const ContactList = ({
                         key={item.number}
                         data={item}
                         index={index}
+                        onClick={handleOnClickItem}
                         onEdit={handleEditItem}
                     />
                 )}

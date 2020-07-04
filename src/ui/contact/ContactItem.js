@@ -5,18 +5,25 @@ import Icon from '../components/Icon';
 const ContactItem = ({
     data,
     index,
-    onEdit
+    onEdit,
+    onClick
 }) => {
     const backgroundColor = useRef(randomColor());
+
     const initialsStyle = {
         background: backgroundColor.current
     }
+
     const handleEdit = useCallback(() => {
         onEdit && onEdit(data, index);
     })
 
+    const handleClick = useCallback(() => {
+        onClick && onClick(data, index);
+    });
+
     return (
-        <div className="list-item">
+        <div className="list-item" onClick={handleClick}>
             <div className="initials" style={initialsStyle}>
                 {getInitials(data.name)}
             </div>

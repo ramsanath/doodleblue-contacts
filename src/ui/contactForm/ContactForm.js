@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../components/Icon';
 import {
@@ -91,7 +91,8 @@ const ContactForm = ({
                 />
                 <FilledButton
                     onClick={handleSubmit}
-                    loading={submitting}>
+                    loading={submitting}
+                    style={{ marginTop: 20 }}>
                     Submit
                 </FilledButton>
             </div>

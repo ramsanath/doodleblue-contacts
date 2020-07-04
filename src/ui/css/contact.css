@@ -135,6 +135,7 @@
 }
 
 #contact-form-content input {
+    font-size: 16px;
     padding: 10px 6px;
     border-radius: 4px;
     border: none;
