@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from './Loader';
 
 const FilledButton = ({
     children,
@@ -13,7 +14,7 @@ const FilledButton = ({
         <div
             {...rest}
             className="filled-btn">
-            {loading ? <div className="loading" /> : null}
+            {loading ? <Loader /> : null}
             <div style={childStyle}>
                 {children}
             </div>

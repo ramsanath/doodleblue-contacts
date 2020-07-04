@@ -23,6 +23,17 @@
     z-index: 1;
 }
 
+.user-info {
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-info:hover {
+    border-bottom: 2px solid black;
+}
+
 .list input[type='search'] {
     margin: 0;
     padding: 10px;

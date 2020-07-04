@@ -1,10 +1,10 @@
-import { generateFakeContacts } from "../Helper";
+import { generateFakeContacts, uuid } from "../Helper";
 
 const delay = wait => new Promise(resolve => setTimeout(resolve, wait));
 const mockDelay = 1000;
 
 const db = {
-    contacts: generateFakeContacts(25)
+    contacts: generateFakeContacts(2)
 };
 
 export const addNewContact = async contact => {
@@ -13,7 +13,7 @@ export const addNewContact = async contact => {
     if (existing) {
         throw new Error('Contact already exists');
     }
-    contact.id = db.contacts.length;
+    contact.id = uuid();
     db.contacts.unshift(contact);
 }
 

@@ -23,7 +23,7 @@ const ContactForm = ({
         submitError
     } = useSelector(store => store.contactForm);
     const updateMode = !!initialData;
-    const { name, number, email } = formData;
+    const { name, number, email, company, address } = formData;
 
     const handleOnChange = useCallback(e => {
         const key = e.target.name;
@@ -88,6 +88,18 @@ const ContactForm = ({
                     value={email}
                     onChange={handleOnChange}
                     placeholder="Email Address"
+                />
+                <input
+                    name="company"
+                    value={company}
+                    onChange={handleOnChange}
+                    placeholder="Company Name"
+                />
+                <input
+                    name="address"
+                    value={address}
+                    onChange={handleOnChange}
+                    placeholder="Address"
                 />
                 <FilledButton
                     onClick={handleSubmit}

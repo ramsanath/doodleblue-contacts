@@ -9,7 +9,9 @@ const initialState = {
     formData: {
         name: '',
         number: '',
-        email: ''
+        email: '',
+        company: '',
+        address: ''
     },
     submitted: false,
     submitting: false,

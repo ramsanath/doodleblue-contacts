@@ -5,10 +5,12 @@ export const generateFakeContacts = count => {
     let data = [];
     for (let i = 0; i < count; i++) {
         data.push({
-            id: i,
+            id: uuid(),
             name: faker.name.firstName() + ' ' + faker.name.lastName(),
             number: faker.phone.phoneNumber(),
-            email: faker.internet.email()
+            email: faker.internet.email(),
+            company: faker.company.companyName(),
+            address: faker.address.streetAddress()
         });
     }
     return data;
@@ -21,3 +23,5 @@ export const randomColor = () => {
 export const getInitials = name => {
     return name.split(' ').map(n => n[0].toUpperCase()).join('');
 }
+
+export const uuid = () => faker.random.uuid();
