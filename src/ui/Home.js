@@ -16,10 +16,10 @@ const Home = () => {
 
 const styles = {
   list: {
-    width: '40%'
+    width: '35%'
   },
   chat: {
-    width: '60%'
+    width: '65%'
   }
 }
 

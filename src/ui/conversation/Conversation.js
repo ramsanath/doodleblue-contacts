@@ -3,16 +3,43 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../css/conversation.css';
 import Icon from '../components/Icon';
 import { getInitials } from '../../Helper';
-import { FETCH_CONVERSATION } from '../../redux/actions/ConversationActions';
+import {
+    FETCH_CONVERSATION,
+    TYPE_IN_MESSAGE,
+    SEND_MESSAGE
+} from '../../redux/actions/ConversationActions';
 import ConversationItem from './ConversationItem';
 
 const Conversation = ({
     style
 }) => {
     const dispatch = useDispatch();
-    const { conversations, contact } = useSelector(state => state.conversation);
+    const {
+        conversations,
+        contact,
+        messageInput
+    } = useSelector(state => state.conversation);
+    console.log(conversations);
     const { currentUser } = useSelector(state => state.user);
     const chatBody = useRef();
+
+    const handleInputMessageChange = useCallback(e => {
+        dispatch(TYPE_IN_MESSAGE.trigger(e.target.value));
+    });
+
+    const handleKeyUp = useCallback(e => {
+        const keyCode = e.which || e.keyCode;
+        if (keyCode === 13) {
+            handleSendMessage(e);
+        }
+    });
+
+    const handleSendMessage = useCallback(e => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (!messageInput) return;
+        dispatch(SEND_MESSAGE.trigger());
+    });
 
     useEffect(() => {
         if (currentUser.id && contact.id) {
@@ -25,8 +52,7 @@ const Conversation = ({
     }, [currentUser.id, contact.id]);
 
     useEffect(() => {
-        if (conversations.length &&
-            chatBody.current) {
+        if (conversations.length && chatBody.current) {
             chatBody.current.scrollTo(0, chatBody.current.scrollHeight);
         }
     }, [conversations.length])
@@ -61,9 +87,14 @@ const Conversation = ({
             )}
         </div>,
         <div id="chat-input" key="input">
-            <input placeholder="Type and send a message" />
-            <div id="send">
-                <Icon icon="send"/>
+            <input
+                value={messageInput}
+                onKeyUp={handleKeyUp}
+                onChange={handleInputMessageChange}
+                placeholder="Type and send a message"
+            />
+            <div id="send" onClick={handleSendMessage}>
+                <Icon icon="send" />
             </div>
         </div>
     ]);

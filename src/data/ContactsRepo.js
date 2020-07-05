@@ -61,8 +61,9 @@ export const getConversation = async (currentUser, targetUser) => {
 }
 
 export const sendMessage = async (currentUser, targetUser, message) => {
-    await delay(mockDelay);
-    let data = await getConversation(currentUser, targetUser);
     message.id = uuid();
-    data.push(message);
+    let data = await getConversation(currentUser, targetUser);
+    data = [...data, message];
+    db.conversations[currentUser.id][targetUser.id] = data;
+    return message;
 }

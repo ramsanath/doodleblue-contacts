@@ -1,14 +1,16 @@
 import {
     FETCH_CONVERSATION,
-    SET_CONVERSATION_CONTACT
+    SET_CONVERSATION_CONTACT,
+    TYPE_IN_MESSAGE,
+    SEND_MESSAGE
 } from "../actions/ConversationActions";
-
 
 const initialState = {
     conversations: [],
     contact: {},
     loading: true,
-    error: null
+    error: null,
+    messageInput: ''
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +34,20 @@ export default (state = initialState, action) => {
                 contact: action.payload
             }
         }
+        case TYPE_IN_MESSAGE.TRIGGER:
+            return {
+                ...state,
+                messageInput: action.payload
+            }
+        case SEND_MESSAGE.SUCCESS:
+            return {
+                ...state,
+                messageInput: '',
+                conversations: [
+                    ...state.conversations,
+                    action.payload
+                ]
+            }
         default:
             return state;
     }

@@ -29,6 +29,7 @@ const ContactList = ({
     }, []);
 
     const handleOnClickItem = useCallback((data, index) => {
+        if (!currentUser.id) return;
         dispatch(SET_CONVERSATION_CONTACT.trigger(data));
     });
 
@@ -71,6 +72,7 @@ const ContactList = ({
             selectedUser,
             currentUser
         }));
+        dispatch(SET_CONVERSATION_CONTACT.trigger({}));
     });
 
     const handleSearch = useCallback(e => {
