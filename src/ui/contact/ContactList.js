@@ -5,18 +5,23 @@ import ContactForm from '../contactForm/ContactForm';
 import UserSelect from './UserSelect';
 import Icon from '../components/Icon';
 import { useSelector, useDispatch } from 'react-redux';
-import { FETCH_CONTACTS } from '../../redux/actions/ContactsAction';
+import { FETCH_CONTACTS, SEARCH_CONTACT } from '../../redux/actions/ContactsAction';
 import { SET_CURRENT_USER } from '../../redux/actions/UserActions';
 
 const ContactList = ({
     style
 }) => {
     const dispatch = useDispatch();
-    const { contacts, loading, error } = useSelector(store => store.contacts);
+    const {
+        contacts,
+        searchInput,
+        searchResults
+    } = useSelector(store => store.contacts);
     const { currentUser } = useSelector(store => store.user);
     const [formVisible, setFormVisible] = useState(false);
     const [initialFormData, setInitialFormData] = useState(null);
     const [userSelect, setUserSelect] = useState(null);
+    const listData = searchInput.length > 0 ? searchResults : contacts;
 
     useEffect(() => {
         dispatch(FETCH_CONTACTS.trigger());
@@ -66,6 +71,10 @@ const ContactList = ({
         }));
     });
 
+    const handleSearch = useCallback(e => {
+        dispatch(SEARCH_CONTACT.trigger(e.target.value));
+    });
+
     const formStyle = {
         left: formVisible ? 0 : '-100%',
         visibility: formVisible ? 'visible' : 'hidden',
@@ -95,9 +104,11 @@ const ContactList = ({
                     <input
                         type="search"
                         placeholder="Search"
+                        value={searchInput}
+                        onChange={handleSearch}
                     />
                 </div>
-                {contacts.map((item, index) =>
+                {listData.map((item, index) =>
                     <ContactItem
                         key={item.number}
                         data={item}

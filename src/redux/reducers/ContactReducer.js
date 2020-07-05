@@ -1,10 +1,12 @@
-import { FETCH_CONTACTS } from "../actions/ContactsAction";
+import { FETCH_CONTACTS, SEARCH_CONTACT } from "../actions/ContactsAction";
 import { SET_CURRENT_USER } from "../actions/UserActions";
 
 const initialState = {
     contacts: [],
     loading: false,
-    error: null
+    error: null,
+    searchInput: '',
+    searchResults: []
 };
 
 export default (state = initialState, action) => {
@@ -41,6 +43,16 @@ export default (state = initialState, action) => {
                 contacts: filteredContacts
             }
         }
+        case SEARCH_CONTACT.TRIGGER:
+            return {
+                ...state,
+                searchInput: action.payload
+            }
+        case SEARCH_CONTACT.SUCCESS:
+            return {
+                ...state,
+                searchResults: action.payload
+            }
         default:
             return state;
     }

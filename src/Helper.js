@@ -25,3 +25,13 @@ export const getInitials = name => {
 }
 
 export const uuid = () => faker.random.uuid();
+
+export const debounce = (callback, wait) => {
+    let timeout;
+    return function () {
+        if (timeout) {
+            timeout = clearTimeout(timeout);
+        }
+        timeout = setTimeout(callback.bind(null, ...arguments), wait);
+    }
+}

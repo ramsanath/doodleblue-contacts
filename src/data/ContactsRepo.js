@@ -4,7 +4,7 @@ const delay = wait => new Promise(resolve => setTimeout(resolve, wait));
 const mockDelay = 1000;
 
 const db = {
-    contacts: generateFakeContacts(2)
+    contacts: generateFakeContacts(25)
 };
 
 export const addNewContact = async contact => {
