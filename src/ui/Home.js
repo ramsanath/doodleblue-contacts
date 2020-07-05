@@ -3,21 +3,23 @@ import './css/index.css';
 import './css/components.css';
 import './css/theme.css';
 import ContactList from './contact/ContactList';
+import Conversation from './conversation/Conversation';
 
 const Home = () => {
   return (
-    <div className="column app">
+    <div id="app">
       <ContactList style={styles.list} />
+      <Conversation style={styles.chat} />
     </div>
   );
 }
 
 const styles = {
   list: {
-    width: '30%'
+    width: '40%'
   },
   chat: {
-    width: '70%'
+    width: '60%'
   }
 }
 

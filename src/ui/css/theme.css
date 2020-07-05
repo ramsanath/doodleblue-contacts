@@ -1,5 +1,6 @@
 :root {
     --accent-color: rgb(0, 115, 215);
+    --accent-light-color: rgb(174, 217, 255);
     --border-color: #e1e1e1;
     --animation-scale: 0.2s;
 }

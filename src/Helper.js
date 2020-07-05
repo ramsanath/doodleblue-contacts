@@ -16,6 +16,18 @@ export const generateFakeContacts = count => {
     return data;
 }
 
+export const generateFakerConversation = count => {
+    let data = [];
+    for (let i = 0; i < count; i++) {
+        data.push({
+            id: uuid(),
+            message: faker.lorem.sentence(),
+            type: faker.random.boolean() ? 'incoming' : 'outgoing'
+        });
+    }
+    return data;
+}
+
 export const randomColor = () => {
     return faker.internet.color();
 }

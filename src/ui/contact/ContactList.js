@@ -7,6 +7,7 @@ import Icon from '../components/Icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { FETCH_CONTACTS, SEARCH_CONTACT } from '../../redux/actions/ContactsAction';
 import { SET_CURRENT_USER } from '../../redux/actions/UserActions';
+import { SET_CONVERSATION_CONTACT } from '../../redux/actions/ConversationActions';
 
 const ContactList = ({
     style
@@ -28,7 +29,7 @@ const ContactList = ({
     }, []);
 
     const handleOnClickItem = useCallback((data, index) => {
-
+        dispatch(SET_CONVERSATION_CONTACT.trigger(data));
     });
 
     const handleEditItem = useCallback((data, index) => {
@@ -49,6 +50,7 @@ const ContactList = ({
     const handleClickSelectUser = useCallback(e => {
         const { bottom, left } = e.target.getBoundingClientRect();
         const userSelect = <UserSelect
+            key="2"
             style={{ top: bottom + 4, left }}
             onSelect={handleCurrentUserSelect}
         />;
@@ -82,7 +84,7 @@ const ContactList = ({
     };
 
     return [
-        <div className="list-container" style={style}>
+        <div className="list-container" style={style} key="1">
             <ContactForm
                 style={formStyle}
                 initialData={initialFormData}
