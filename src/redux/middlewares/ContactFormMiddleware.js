@@ -6,11 +6,11 @@ const ContactFormMiddleware = store => next => async action => {
     next(action);
     if (action.type === SUBMIT_CONTACT_FORM.TRIGGER) {
         const { update, formData } = action.payload;
-        let api = api.addNewContact;
+        let apiFn = api.addNewContact;
         if (update) {
-            api = api.updateContact
+            apiFn = api.updateContact
         }
-        api(formData)
+        apiFn(formData)
             .then(() => store.dispatch(FETCH_CONTACTS.trigger()))
             .then(() => store.dispatch(SUBMIT_CONTACT_FORM.success()))
             .catch(error => store.dispatch(SUBMIT_CONTACT_FORM.failure(error.message)));
