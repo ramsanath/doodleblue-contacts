@@ -34,7 +34,7 @@ const ContactItem = ({
         <div className="list-item" onClick={handleClick}>
             <Initials
                 onClick={handleOnClickInitials}
-                name={data.name}
+                contact={data}
             />
             <div className="column">
                 <div className="list-item-title">{data.name}</div>

@@ -1,17 +1,16 @@
-import React, { useRef } from 'react';
-import { randomColor, getInitials } from '../../Helper';
+import React from 'react';
+import { getInitials } from '../../Helper';
 
 const Initials = ({
-    name,
+    contact,
     size = 16,
     style,
     onClick,
     ...props
 }) => {
-    const color = useRef(randomColor());
     const initialsStyle = {
         ...style,
-        backgroundColor: color.current,
+        backgroundColor: contact.color,
         fontSize: size,
         height: size * 1.5,
         width: size * 1.5,
@@ -24,7 +23,7 @@ const Initials = ({
             style={initialsStyle}
             onClick={onClick}
             {...props}>
-            {getInitials(name)}
+            {getInitials(contact.name)}
         </div>
     );
 }

@@ -1,7 +1,8 @@
 import {
     uuid,
     generateFakeContacts,
-    generateFakerConversation
+    generateFakerConversation,
+    randomColor
 } from "../Helper";
 
 const delay = wait => new Promise(resolve => setTimeout(resolve, wait));
@@ -19,6 +20,7 @@ export const addNewContact = async contact => {
         throw new Error('Contact already exists');
     }
     contact.id = uuid();
+    contact.color = randomColor();
     db.contacts.unshift(contact);
 }
 

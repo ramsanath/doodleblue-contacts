@@ -10,7 +10,8 @@ export const generateFakeContacts = count => {
             number: faker.phone.phoneNumber(),
             email: faker.internet.email(),
             company: faker.company.companyName(),
-            address: faker.address.streetAddress()
+            address: faker.address.streetAddress(),
+            color: randomColor()
         });
     }
     return data;

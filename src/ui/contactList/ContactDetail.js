@@ -26,7 +26,7 @@ const ContactDetail = ({
             <div className="contact-card">
                 <Initials
                     style={{ padding: 8, alignSelf: 'center', marginBottom: 16 }}
-                    name={contact.name}
+                    contact={contact}
                     size={50}
                 />
                 <div className="column">

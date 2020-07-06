@@ -9,6 +9,7 @@ import {
     SEND_MESSAGE
 } from '../../redux/actions/ConversationActions';
 import ConversationItem from './ConversationItem';
+import Initials from '../components/Initials';
 
 const Conversation = ({
     style
@@ -76,9 +77,9 @@ const Conversation = ({
 
     const renderConversation = useCallback(() => [
         <div id="chat-header" key="header">
-            <div className="initials">
-                {getInitials(contact.name)}
-            </div>
+            <Initials
+                contact={contact}
+            />
             <div>{contact.name}</div>
         </div>,
         <div id="chat-body" key="body" ref={chatBody}>
