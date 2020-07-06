@@ -36,8 +36,7 @@ export const updateContact = async contact => {
 
 export const deleteContact = async contact => {
     await delay(mockDelay);
-    const index = db.findIndex(c => c.number === contact.number);
-    db.contacts = db.contacts.splice(index, 1);
+    db.contacts = db.contacts.filter(c => c.id !== contact.id);
 }
 
 export const getAllContacts = async () => {
