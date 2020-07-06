@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import '../css/contact.css';
 import ContactItem from './ContactItem';
 import ContactForm from '../contactForm/ContactForm';
 import UserSelect from './UserSelect';
 import Icon from '../components/Icon';
-import { useSelector, useDispatch } from 'react-redux';
+import { RESET_CONTACT_FORM_STATE, } from '../../redux/actions/ContactFormActions';
 import { FETCH_CONTACTS, SEARCH_CONTACT, DELETE_CONTACT } from '../../redux/actions/ContactsAction';
 import { SET_CURRENT_USER } from '../../redux/actions/UserActions';
 import { SET_CONVERSATION_CONTACT } from '../../redux/actions/ConversationActions';
+import SideBar from '../components/SideBar';
+import ContactDetail from './ContactDetail';
 
 const ContactList = ({
     style
@@ -20,10 +23,12 @@ const ContactList = ({
     } = useSelector(store => store.contacts);
     const { currentUser } = useSelector(store => store.user);
     const { contact: targetContact } = useSelector(store => store.conversation);
-    const [formVisible, setFormVisible] = useState(false);
+    const [sidebarContent, setSidebarContent] = useState('');
     const [initialFormData, setInitialFormData] = useState(null);
+    const [contactDetailId, setContactDetailId] = useState(null);
     const [userSelect, setUserSelect] = useState(null);
     const listData = searchInput.length > 0 ? searchResults : contacts;
+    const sidebarVisible = !!sidebarContent;
 
     useEffect(() => {
         dispatch(FETCH_CONTACTS.trigger());
@@ -36,7 +41,12 @@ const ContactList = ({
 
     const handleEditItem = useCallback((data, index) => {
         setInitialFormData(data);
-        setFormVisible(true);
+        setSidebarContent("form");
+    });
+
+    const handleGetContactDetails = useCallback((data, callback) => {
+        setSidebarContent('detail');
+        setContactDetailId(data.id);
     });
 
     const handleDeleteItem = useCallback((data, index) => {
@@ -46,12 +56,14 @@ const ContactList = ({
 
     const handleNewItem = useCallback(() => {
         setInitialFormData(null);
-        setFormVisible(true);
+        setSidebarContent("form");
     });
 
-    const handleCloseForm = useCallback(() => {
+    const handleCloseSidebar = useCallback(() => {
         setInitialFormData(null);
-        setFormVisible(false);
+        setSidebarContent(null);
+        setContactDetailId(null);
+        dispatch(RESET_CONTACT_FORM_STATE.trigger());
     });
 
     const handleClickSelectUser = useCallback(e => {
@@ -85,19 +97,32 @@ const ContactList = ({
         dispatch(SEARCH_CONTACT.trigger(e.target.value));
     });
 
-    const formStyle = {
-        left: formVisible ? 0 : '-100%',
-        visibility: formVisible ? 'visible' : 'hidden',
+    const siderStyle = {
+        left: sidebarVisible ? 0 : '-100%',
+        visibility: sidebarVisible ? 'visible' : 'hidden',
         transition: 'var(--animation-scale)',
     };
+    const sidebarTitle = sidebarContent === 'form'
+        ? (initialFormData ? 'Edit Contact' : 'New Contact')
+        : 'Contact Details';
 
     return [
         <div className="list-container" style={style} key="1">
-            <ContactForm
-                style={formStyle}
-                initialData={initialFormData}
-                onClose={handleCloseForm}
-            />
+            <SideBar
+                visible={sidebarContent}
+                title={sidebarTitle}
+                style={siderStyle}
+                onRequestBack={handleCloseSidebar}>
+                {sidebarContent === 'form' ?
+                    <ContactForm
+                        onSubmitted={handleCloseSidebar}
+                        initialData={initialFormData}
+                    />
+                    : null}
+                {sidebarContent === 'detail'
+                    ? <ContactDetail contactId={contactDetailId} />
+                    : null}
+            </SideBar>
             <div className="list">
                 <div className="header">
                     <div className="list-title">
@@ -124,6 +149,7 @@ const ContactList = ({
                         data={item}
                         index={index}
                         onClick={handleOnClickItem}
+                        onClickInitials={handleGetContactDetails}
                         onEdit={handleEditItem}
                         onDelete={handleDeleteItem}
                     />

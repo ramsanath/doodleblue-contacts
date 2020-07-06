@@ -1,17 +1,15 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from '../components/Icon';
 import {
     ON_CHANGE_INPUT,
     SUBMIT_CONTACT_FORM,
-    RESET_CONTACT_FORM_STATE,
     SET_INITIAL_CONTACT_FORM_DATA
 } from '../../redux/actions/ContactFormActions';
 import { validateForm } from './ContactFormHelper';
 import FilledButton from '../components/FilledButton';
 
 const ContactForm = ({
-    onClose,
+    onSubmitted,
     style,
     initialData
 }) => {
@@ -31,14 +29,9 @@ const ContactForm = ({
         dispatch(ON_CHANGE_INPUT.trigger({ key, value }));
     });
 
-    const handleOnClose = useCallback(() => {
-        onClose && onClose();
-        dispatch(RESET_CONTACT_FORM_STATE.trigger());
-    });
-
     useEffect(() => {
         if (submitted) {
-            handleOnClose();
+            onSubmitted && onSubmitted();
         }
     }, [submitted]);
 
@@ -59,55 +52,45 @@ const ContactForm = ({
 
     return (
         <div id="contact-form" style={style}>
-            <div id="contact-form-header">
-                <Icon
-                    icon="back"
-                    onClick={handleOnClose}
-                    style={{ marginRight: 10 }}
-                />
-                {updateMode ? 'Edit Contact' : 'Add New Contact'}
+            <div className="error-message">
+                {submitError}
             </div>
-            <div id="contact-form-content">
-                <div className="error-message">
-                    {submitError}
-                </div>
-                <input
-                    name="name"
-                    value={name}
-                    onChange={handleOnChange}
-                    placeholder="Name"
-                />
-                <input
-                    name="number"
-                    value={number}
-                    onChange={handleOnChange}
-                    placeholder="Phone Number"
-                />
-                <input
-                    name="email"
-                    value={email}
-                    onChange={handleOnChange}
-                    placeholder="Email Address"
-                />
-                <input
-                    name="company"
-                    value={company}
-                    onChange={handleOnChange}
-                    placeholder="Company Name"
-                />
-                <input
-                    name="address"
-                    value={address}
-                    onChange={handleOnChange}
-                    placeholder="Address"
-                />
-                <FilledButton
-                    onClick={handleSubmit}
-                    loading={submitting}
-                    style={{ marginTop: 20 }}>
-                    Submit
+            <input
+                name="name"
+                value={name}
+                onChange={handleOnChange}
+                placeholder="Name"
+            />
+            <input
+                name="number"
+                value={number}
+                onChange={handleOnChange}
+                placeholder="Phone Number"
+            />
+            <input
+                name="email"
+                value={email}
+                onChange={handleOnChange}
+                placeholder="Email Address"
+            />
+            <input
+                name="company"
+                value={company}
+                onChange={handleOnChange}
+                placeholder="Company Name"
+            />
+            <input
+                name="address"
+                value={address}
+                onChange={handleOnChange}
+                placeholder="Address"
+            />
+            <FilledButton
+                onClick={handleSubmit}
+                loading={submitting}
+                style={{ marginTop: 20 }}>
+                Submit
                 </FilledButton>
-            </div>
         </div>
     );
 }

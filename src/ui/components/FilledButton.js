@@ -6,7 +6,7 @@ const FilledButton = ({
     loading,
     ...rest
 }) => {
-    const childStyle = { 
+    const childStyle = {
         marginLeft: loading ? 10 : 0,
         transition: 'var(--animation-scale)'
     }
@@ -14,7 +14,10 @@ const FilledButton = ({
         <div
             {...rest}
             className="filled-btn">
-            {loading ? <Loader /> : null}
+            {loading ? <Loader
+                foregroundColor={'#fff'}
+                backgroundColor={'rgba(255, 255, 255, 0.3)'}
+            /> : null}
             <div style={childStyle}>
                 {children}
             </div>

@@ -1,0 +1,29 @@
+.contact-detail-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.contact-detail-container .loading {
+    align-self: center;
+    margin-top: 25px;
+}
+
+.contact-card {
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+}
+
+.contact-card .label {
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.contact-card .value {
+    text-align: left;
+    color: grey;
+    font-size: 16px;
+    margin-bottom: 8px;
+}

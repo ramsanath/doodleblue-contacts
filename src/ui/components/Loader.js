@@ -1,13 +1,15 @@
 import React from 'react';
 
 const Loader = ({
-    backgroundColor = 'rgba(255, 255, 255, 0.3)',
-    foregroundColor = '#ffffff',
-    size = 15
+    backgroundColor = 'var(--border-color)',
+    foregroundColor = 'var(--accent-color)',
+    size = 15,
+    style
 }) => {
     return <div
         className="loading"
         style={{
+            ...style,
             borderColor: backgroundColor,
             borderTopColor: foregroundColor,
             width: size,

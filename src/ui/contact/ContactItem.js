@@ -1,5 +1,5 @@
-import React, { useRef, useCallback } from 'react';
-import { randomColor, getInitials } from '../../Helper';
+import React, { useCallback } from 'react';
+import Initials from '../components/Initials';
 import Icon from '../components/Icon';
 
 const ContactItem = ({
@@ -7,14 +7,9 @@ const ContactItem = ({
     index,
     onEdit,
     onDelete,
+    onClickInitials,
     onClick
 }) => {
-    const backgroundColor = useRef(randomColor());
-
-    const initialsStyle = {
-        background: backgroundColor.current
-    }
-
     const handleEdit = useCallback(e => {
         e.stopPropagation();
         onEdit && onEdit(data, index);
@@ -30,11 +25,17 @@ const ContactItem = ({
         onClick && onClick(data, index);
     });
 
+    const handleOnClickInitials = useCallback(e => {
+        e.stopPropagation();
+        onClickInitials && onClickInitials(data, index);
+    })
+
     return (
         <div className="list-item" onClick={handleClick}>
-            <div className="initials" style={initialsStyle}>
-                {getInitials(data.name)}
-            </div>
+            <Initials
+                onClick={handleOnClickInitials}
+                name={data.name}
+            />
             <div className="column">
                 <div className="list-item-title">{data.name}</div>
                 <div className="list-item-description">{data.number}</div>

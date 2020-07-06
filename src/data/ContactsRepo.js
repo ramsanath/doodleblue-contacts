@@ -67,3 +67,8 @@ export const sendMessage = async (currentUser, targetUser, message) => {
     db.conversations[currentUser.id][targetUser.id] = data;
     return message;
 }
+
+export const getContact = async contactId => {
+    await delay(mockDelay);
+    return db.contacts.find(c => c.id === contactId);
+}
