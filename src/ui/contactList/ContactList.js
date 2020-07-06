@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import '../css/contact.css';
+import '../css/contact-list.css';
 import ContactItem from './ContactItem';
 import ContactForm from '../contactForm/ContactForm';
 import UserSelect from './UserSelect';
