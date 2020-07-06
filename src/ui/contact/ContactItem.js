@@ -6,6 +6,7 @@ const ContactItem = ({
     data,
     index,
     onEdit,
+    onDelete,
     onClick
 }) => {
     const backgroundColor = useRef(randomColor());
@@ -14,11 +15,18 @@ const ContactItem = ({
         background: backgroundColor.current
     }
 
-    const handleEdit = useCallback(() => {
+    const handleEdit = useCallback(e => {
+        e.stopPropagation();
         onEdit && onEdit(data, index);
     })
 
-    const handleClick = useCallback(() => {
+    const handleDelete = useCallback(e => {
+        e.stopPropagation();
+        onDelete && onDelete(data, index);
+    });
+
+    const handleClick = useCallback(e => {
+        e.stopPropagation();
         onClick && onClick(data, index);
     });
 
@@ -31,11 +39,17 @@ const ContactItem = ({
                 <div className="list-item-title">{data.name}</div>
                 <div className="list-item-description">{data.number}</div>
             </div>
-            <Icon
-                onClick={handleEdit}
-                icon="edit"
-                className="item-edit"
-            />
+            <div className="item-action">
+                <Icon
+                    onClick={handleDelete}
+                    icon="delete"
+                    style={{ marginRight: 8 }}
+                />
+                <Icon
+                    onClick={handleEdit}
+                    icon="edit"
+                />
+            </div>
         </div>
     );
 }

@@ -108,7 +108,7 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.item-edit {
+.item-action {
     padding: 4px;
     position: absolute;
     right: 8px;
@@ -116,7 +116,7 @@
     display: none;
 }
 
-.list-item:hover .item-edit {
+.list-item:hover .item-action {
     display: unset;
 }
 

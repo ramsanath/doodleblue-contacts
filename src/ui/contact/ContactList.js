@@ -5,7 +5,7 @@ import ContactForm from '../contactForm/ContactForm';
 import UserSelect from './UserSelect';
 import Icon from '../components/Icon';
 import { useSelector, useDispatch } from 'react-redux';
-import { FETCH_CONTACTS, SEARCH_CONTACT } from '../../redux/actions/ContactsAction';
+import { FETCH_CONTACTS, SEARCH_CONTACT, DELETE_CONTACT } from '../../redux/actions/ContactsAction';
 import { SET_CURRENT_USER } from '../../redux/actions/UserActions';
 import { SET_CONVERSATION_CONTACT } from '../../redux/actions/ConversationActions';
 
@@ -19,6 +19,7 @@ const ContactList = ({
         searchResults
     } = useSelector(store => store.contacts);
     const { currentUser } = useSelector(store => store.user);
+    const { contact: targetContact } = useSelector(store => store.conversation);
     const [formVisible, setFormVisible] = useState(false);
     const [initialFormData, setInitialFormData] = useState(null);
     const [userSelect, setUserSelect] = useState(null);
@@ -36,6 +37,11 @@ const ContactList = ({
     const handleEditItem = useCallback((data, index) => {
         setInitialFormData(data);
         setFormVisible(true);
+    });
+
+    const handleDeleteItem = useCallback((data, index) => {
+        if (targetContact.id === data.id) return;
+        dispatch(DELETE_CONTACT.trigger(data));
     });
 
     const handleNewItem = useCallback(() => {
@@ -119,6 +125,7 @@ const ContactList = ({
                         index={index}
                         onClick={handleOnClickItem}
                         onEdit={handleEditItem}
+                        onDelete={handleDeleteItem}
                     />
                 )}
             </div>

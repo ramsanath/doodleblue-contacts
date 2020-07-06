@@ -1,8 +1,10 @@
-import { FETCH_CONTACTS, SEARCH_CONTACT } from "../actions/ContactsAction";
+import {
+    FETCH_CONTACTS,
+    SEARCH_CONTACT,
+    DELETE_CONTACT
+} from "../actions/ContactsAction";
 import * as contactsRepo from '../../data/ContactsRepo';
 import { debounce } from "../../Helper";
-
-
 
 const ContactsMiddleware = store => next => async action => {
     next(action);
@@ -16,9 +18,12 @@ const ContactsMiddleware = store => next => async action => {
             })
             .then(contacts => store.dispatch(FETCH_CONTACTS.success(contacts)))
             .catch(error => store.dispatch(FETCH_CONTACTS.failure(error)));
-    }
-    if (action.type == SEARCH_CONTACT.TRIGGER) {
+    } else if (action.type === SEARCH_CONTACT.TRIGGER) {
         handleSearch(store, action);
+    } else if (action.type === DELETE_CONTACT.TRIGGER) {
+        contactsRepo.deleteContact(action.payload)
+            .then(() => store.dispatch(DELETE_CONTACT.success()))
+            .catch(e => store.dispatch(DELETE_CONTACT.failure(e.message)));
     }
 }
 

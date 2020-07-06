@@ -5,6 +5,7 @@ const IconData = {
     person: require('../../icons/person.svg'),
     chat: require('../../icons/chat.svg'),
     send: require('../../icons/send.svg'),
+    delete: require('../../icons/delete.svg'),
 }
 
 export default IconData;

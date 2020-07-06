@@ -1,4 +1,4 @@
-import { FETCH_CONTACTS, SEARCH_CONTACT } from "../actions/ContactsAction";
+import { FETCH_CONTACTS, SEARCH_CONTACT, DELETE_CONTACT } from "../actions/ContactsAction";
 import { SET_CURRENT_USER } from "../actions/UserActions";
 
 const initialState = {
@@ -52,6 +52,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 searchResults: action.payload
+            }
+        case DELETE_CONTACT.TRIGGER:
+            return {
+                ...state,
+                contacts: state.contacts.filter(c => c.id !== action.payload.id)
             }
         default:
             return state;
