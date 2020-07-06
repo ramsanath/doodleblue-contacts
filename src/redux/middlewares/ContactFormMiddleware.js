@@ -1,14 +1,14 @@
 import { FETCH_CONTACTS } from '../actions/ContactsAction';
 import { SUBMIT_CONTACT_FORM } from "../actions/ContactFormActions";
-import * as contactsRepo from '../../data/ContactsRepo';
+import * as api from '../../data/api';
 
 const ContactFormMiddleware = store => next => async action => {
     next(action);
     if (action.type === SUBMIT_CONTACT_FORM.TRIGGER) {
         const { update, formData } = action.payload;
-        let api = contactsRepo.addNewContact;
+        let api = api.addNewContact;
         if (update) {
-            api = contactsRepo.updateContact
+            api = api.updateContact
         }
         api(formData)
             .then(() => store.dispatch(FETCH_CONTACTS.trigger()))

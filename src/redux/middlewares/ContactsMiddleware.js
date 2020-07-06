@@ -3,14 +3,14 @@ import {
     SEARCH_CONTACT,
     DELETE_CONTACT
 } from "../actions/ContactsAction";
-import * as contactsRepo from '../../data/ContactsRepo';
+import * as api from '../../data/api';
 import { debounce } from "../../Helper";
 
 const ContactsMiddleware = store => next => async action => {
     next(action);
     if (action.type === FETCH_CONTACTS.TRIGGER) {
         const { user: { currentUser } } = store.getState();
-        contactsRepo.getAllContacts()
+        api.getAllContacts()
             .then(contacts => {
                 return currentUser.id
                     ? contacts.filter(c => c.id !== currentUser.id)
@@ -21,7 +21,7 @@ const ContactsMiddleware = store => next => async action => {
     } else if (action.type === SEARCH_CONTACT.TRIGGER) {
         handleSearch(store, action);
     } else if (action.type === DELETE_CONTACT.TRIGGER) {
-        contactsRepo.deleteContact(action.payload)
+        api.deleteContact(action.payload)
             .then(() => store.dispatch(DELETE_CONTACT.success()))
             .catch(e => store.dispatch(DELETE_CONTACT.failure(e.message)));
     }
