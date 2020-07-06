@@ -2,7 +2,7 @@ import React from 'react';
 import './css/index.css';
 import './css/components.css';
 import './css/theme.css';
-import ContactList from './contact/ContactList';
+import ContactList from './contactList/ContactList';
 import Conversation from './conversation/Conversation';
 
 const Home = () => {

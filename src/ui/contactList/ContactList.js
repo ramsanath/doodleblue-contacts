@@ -16,17 +16,14 @@ const ContactList = ({
     style
 }) => {
     const dispatch = useDispatch();
-    const {
-        contacts,
-        searchInput,
-        searchResults
-    } = useSelector(store => store.contacts);
-    const { currentUser } = useSelector(store => store.user);
-    const { contact: targetContact } = useSelector(store => store.conversation);
+    const [userSelect, setUserSelect] = useState(null);
     const [sidebarContent, setSidebarContent] = useState('');
     const [initialFormData, setInitialFormData] = useState(null);
     const [contactDetailId, setContactDetailId] = useState(null);
-    const [userSelect, setUserSelect] = useState(null);
+    const { currentUser } = useSelector(store => store.user);
+    const { contact: targetContact } = useSelector(store => store.conversation);
+    const { contacts, searchInput, searchResults } = useSelector(store => store.contacts);
+
     const listData = searchInput.length > 0 ? searchResults : contacts;
     const sidebarVisible = !!sidebarContent;
 
